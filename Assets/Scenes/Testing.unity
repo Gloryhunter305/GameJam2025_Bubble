@@ -289,9 +289,13 @@ MonoBehaviour:
   RB: {fileID: 144283096}
   Coll: {fileID: 144283095}
   AS: {fileID: 0}
+  Health: 3
   Speed: 5
   JumpPower: 10
   Gravity: 1
+  OnGround: 0
+  FacingLeft: 0
+  touching: []
   score: 0
 --- !u!70 &144283095
 CapsuleCollider2D:

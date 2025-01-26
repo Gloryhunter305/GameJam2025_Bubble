@@ -6,6 +6,13 @@ public class PlayerRespawn : MonoBehaviour
 {
     public Vector3 respawnPoint;
 
+    private PlayerScript player;
+
+    void Start()
+    {
+        player = GameObject.Find("Player").GetComponent<PlayerScript>();
+    }
+
     public void RespawnNow()
     {
         transform.position = respawnPoint;
@@ -16,6 +23,7 @@ public class PlayerRespawn : MonoBehaviour
         if (other.gameObject.tag == "Enemy")
         {
             RespawnNow();
+            player.Health -= 1;
         }
     }
 }

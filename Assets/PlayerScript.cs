@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -10,9 +11,15 @@ public class PlayerScript : MonoBehaviour
     public AudioSource AS;      //Audio for Gameobject 
 
     //Gameobject's Stats (may change)
+    public int Health = 3;
     public float Speed = 5;
     public float JumpPower = 10;
     public float Gravity = 1;
+
+    //GameObject's State
+    public bool OnGround = false;
+    public bool FacingLeft = false;
+    public List<GameObject> touching;
 
     [SerializeField] private int score;
 
@@ -39,12 +46,18 @@ public class PlayerScript : MonoBehaviour
             vel.x = 0;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && CanJump())
         {
             vel.y = JumpPower;
         }
 
         RB.velocity = vel;
+
+        //Game Over Condition: Lose all health
+        if (Health == 0)
+        {
+            SceneManager.LoadSceneAsync(2); //GameOverScene Index
+        } 
     }
 
     private void OnTriggerEnter2D (Collider2D other)
@@ -54,5 +67,22 @@ public class PlayerScript : MonoBehaviour
             Debug.Log("Collected a bubble");
             score++;
         }
+    }
+
+    public bool CanJump()
+    {
+        return touching.Count > 0;
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        OnGround = true;
+        touching.Add(other.gameObject);
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        OnGround = false;
+        touching.Remove(other.gameObject);
     }
 }
