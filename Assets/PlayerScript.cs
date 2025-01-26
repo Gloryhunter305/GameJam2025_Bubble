@@ -70,7 +70,7 @@ public class PlayerScript : MonoBehaviour
         
         if (other.CompareTag("Win"))    //If player touches geyser
         {
-            if (score > 10)
+            if (score > 9)
             {
                 SceneManager.LoadSceneAsync(3);     //WinScreen Index
             }
