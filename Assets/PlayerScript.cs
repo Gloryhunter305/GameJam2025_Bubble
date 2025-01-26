@@ -53,7 +53,7 @@ public class PlayerScript : MonoBehaviour
 
         RB.velocity = vel;
 
-        //Game Over Condition: Lose all health
+        //Game Over Condition: Lose all health before reaching the end
         if (Health == 0)
         {
             SceneManager.LoadSceneAsync(2); //GameOverScene Index
@@ -66,6 +66,18 @@ public class PlayerScript : MonoBehaviour
         {
             Debug.Log("Collected a bubble");
             score++;
+        }
+        
+        if (other.CompareTag("Win"))    //If player touches geyser
+        {
+            if (score == 18)
+            {
+                SceneManager.LoadSceneAsync(3);     //WinScreen Index
+            }
+            else
+            {
+                Debug.Log("Not enough bubbles to reach win screen.");
+            }
         }
     }
 
